@@ -17,6 +17,8 @@ Target_12PP = IF(Operador_Mantenedor[Tipo]="Operador/a",10,IF(Operador_Mantenedo
 ```
 Si se quisiera otorgar un target que también dependa de la compañía (u otro parámetro), basta con agregar flujos de IF - ELSE.
 
+Para el parámetro Logro (cumple o no cumple) debe cumplir todos los target asociados a cada forms.
+
 Ojo: En caso de que el evaluador haya ingresado evaluaciones con dos cargos distintos, sus evaluaciones aparecerán separadas para las respuestas que realizó con cada cargo. Esto podría deberse tanto a un error de input del verificador, como también poseer distintos cargos en el período.
 
 Notar que existen formularios que se pueden responder "por partes". Esto es un punto a consideración, pues podría darse el caso que un evaluador responda cada pregunta de un formulario en un ingreso distinto. Esto es, si el forms tiene 10 preguntas distintas, y el evaluador decide responder por separado las 10 veces, tendrá asociadas 10 respuestas en vez de una. Esto debe ser considerado, pues podría deberse a una falta de ética para contabilizar más respuestas, pues el fin principal de permitir responder los formularios en partes, es que aquellas preguntas que no aplican para determinado verificador, no sean respondidas.
@@ -40,9 +42,6 @@ Mientras que actualmente se encuentra así:
 Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre_Ingresado],"Tipo",[Tipo],"Compañía",[Compañia],"RUT",[RUT]),CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>"")))
 ```
 
+Para presentar los nombres de los verificadores, existe más de una alternativa. Por un lado, Antucoya presentó sus tablas de pares Nombre - RUT de los empleados internos y externos. En el caso de Centinela, solo de los internos. De esta manera (y como se puede ver en la pestaña Homologación del modelo relacional), se pueden conectar estas tablas intermedias con la tabla Nombre (mediante el RUT) para tener los nombres "limpios" de cada empleado. Notar que estas tablas tendrían que actualizarse de manera manual (por ejeplo, mensualmente), para nuevos empleados. Para el caso de la tabla Nombre, esta se actualiza automáticamente con los datos ingresados en los forms. Por ende, la opción alternativa es no usar estos pares RUT-Nombre, a cambio de perder la posibilidad de mostrar en un único nombre los múltiples ingesos asociados al mismo RUT. (Aunque, de todos modos, el logro viene asociado al RUT, por lo que se tendrían los mismos resultados para los distintos nombres asociados al mismo RUT; solo que para visualizar es más engorroso)
 
-
-Actualmente, Antucoya presentó una lista de asociaciones RUT - Nombre Empleado. Por ende, se está usando para esta compañia esta lista para presentar las tablas. Notar que en caso de agregar nuevos verificadores, se puede ir actualizando de manera mensual o periódica manualmente la tabla. Por lo mismo, se debe considerar los posibles nombres que no puedan estar en las tablas presentadas, los cuales saldrían sin nombre asociado (solo RUT).
-
-En el caso de Centinela, se está usando la tabla general de nombres, por lo que se debe considerar los nombres escritos de distintas maneras.
 
