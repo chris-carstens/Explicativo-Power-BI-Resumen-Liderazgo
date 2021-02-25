@@ -33,15 +33,19 @@ Actualmente, los formularios de buenas prácticas plantas y de las estrategias d
 Una vez ingresado el campo RUT, se debe enlazar en el modelo relacional con el campo RUT de la tabla Nombre. Dado que la tabla Nombre se forma a partir de los nombres y RUT de todos los empleados existentes en las bases de datos usadas, se debe actualizar su cálculo con los valores de las tablas de RECSS. La fórmula para esta tabla quedaría de la siguiente manera:
 
 ```
-Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía], "RUT",[RUT]),CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",
-
-[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>""),SELECTCOLUMNS(Fase1,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),SELECTCOLUMNS(Fase2,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),SELECTCOLUMNS(Fase3,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT])))
+Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía], "RUT",[RUT]),
+CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),
+Corporativo[Nombre]<>""),SELECTCOLUMNS(Fase1,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),
+SELECTCOLUMNS(Fase2,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),
+SELECTCOLUMNS(Fase3,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT])))
 ```
 
 Mientras que actualmente se encuentra así:
 
 ```
-Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre_Ingresado],"Tipo",[Tipo],"Compañía",[Compañia],"RUT",[RUT]),CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>"")))
+Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre_Ingresado],"Tipo",
+[Tipo],"Compañía",[Compañia],"RUT",[RUT]),CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",[Nombre],
+"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>"")))
 ```
 
 Para presentar los nombres de los verificadores, existe más de una alternativa. Por un lado, Antucoya presentó sus tablas de pares Nombre - RUT de los empleados internos y externos. En el caso de Centinela, solo de los internos. De esta manera (y como se puede ver en la pestaña Homologación del modelo relacional), se pueden conectar estas tablas intermedias con la tabla Nombre (mediante el RUT) para tener los nombres "limpios" de cada empleado. Notar que estas tablas tendrían que actualizarse de manera manual (por ejeplo, mensualmente), para nuevos empleados. Para el caso de la tabla Nombre, esta se actualiza automáticamente con los datos ingresados en los forms. Por ende, la opción alternativa es no usar estos pares RUT-Nombre, a cambio de perder la posibilidad de mostrar en un único nombre los múltiples ingesos asociados al mismo RUT. (Aunque, de todos modos, el logro viene asociado al RUT, por lo que se tendrían los mismos resultados para los distintos nombres asociados al mismo RUT; solo que para visualizar es más engorroso)
