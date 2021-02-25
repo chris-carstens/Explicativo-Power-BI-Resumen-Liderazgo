@@ -33,7 +33,9 @@ Actualmente, los formularios de buenas prácticas plantas y de las estrategias d
 Una vez ingresado el campo RUT, se debe enlazar en el modelo relacional con el campo RUT de la tabla Nombre. Dado que la tabla Nombre se forma a partir de los nombres y RUT de todos los empleados existentes en las bases de datos usadas, se debe actualizar su cálculo con los valores de las tablas de RECSS. La fórmula para esta tabla quedaría de la siguiente manera:
 
 ```
-Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía], "RUT",[RUT]),CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>""),SELECTCOLUMNS(Fase1,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),SELECTCOLUMNS(Fase2,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),SELECTCOLUMNS(Fase3,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT])))
+Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía], "RUT",[RUT]),CALCULATETABLE(SELECTCOLUMNS(Corporativo,"Nombre",
+
+[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>""),SELECTCOLUMNS(Fase1,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),SELECTCOLUMNS(Fase2,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),SELECTCOLUMNS(Fase3,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT])))
 ```
 
 Mientras que actualmente se encuentra así:
