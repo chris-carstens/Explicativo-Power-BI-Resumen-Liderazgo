@@ -13,6 +13,8 @@
 4. Actualmente se está contando el número de preguntas respondidas y no el número de verificaciones (en parte porque existen formularios que se pueden responder por partes, y porque la consulta DISTINCT es muy cara y demora más con la cantidad de datos). Hay que analizar si no hay problema con esto, o si se prefiere usar operación DISTINCT contabilizando solo la cantidad de veces que se rellena el forms. Como en teoría se usará esto con los datos del 2021, no sería necesario cargar las fechas anteriores y sería mas eficiente esto ultimo.
 
 
+## General
+
 El siguiente explicativo contiene algunas consideraciones a tener para interpretar de manera óptima el dashboard desarrollado.
 
 El Power BI presenta las siguiqntes páginas:
