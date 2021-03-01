@@ -1,5 +1,18 @@
 # Explicativo Power BI Resumen y Liderazgo :rotating_light:
 
+
+## Consideraciones más importantes pendientes:
+
+1. Para presentar los nombres de los verificadores, existe más de una alternativa. Por un lado, Antucoya presentó sus tablas de pares Nombre - RUT de los empleados internos y externos. En el caso de Centinela, solo de los internos. De esta manera (y como se puede ver en la pestaña Homologación del modelo relacional), se pueden conectar estas tablas intermedias con la tabla Nombre (mediante el RUT) para tener los nombres "limpios" de cada empleado. Notar que estas tablas tendrían que actualizarse de manera manual (por ejemplo, mensualmente), para nuevos empleados. Para el caso de la tabla Nombre, esta se actualiza automáticamente con los datos ingresados en los forms. Por ende, la opción alternativa es no usar estos pares RUT-Nombre, a cambio de perder la posibilidad de mostrar en un único nombre los múltiples ingesos asociados al mismo RUT. (Aunque, de todos modos, el logro viene asociado al RUT, por lo que se tendrían los mismos resultados para los distintos nombres asociados al mismo RUT; solo que para visualizar es más engorroso). Actualmente se presentaron las tablas con el parámetro nombre ingresado por el usuario y no el normalizado (tabla RUT_ANT), pues esta última tabla no incluía todos los nombres, pero es algo que se debe decidir. De todos modos, ya está presente en el modelo relacional, por lo que si se quiere cambiar en la tabla, basta con reeplazar el nombre de la tabla Nombres por el de la tabla RUT_ANT en las visualizaciones.
+
+
+2. Considerar que si un verificador ingresó más de un cargo (por ejemplo, Operador y Supervisor) en distintas respuestas, sus resultados aparecerán separados para cada caso.
+
+3. Está pendiente que ANTUCOYA mande su bdd asociada al formulario de prácticas mineras para analizar su integración. Centinela la mandó recién (dejé cargada la bdd en la carpeta 12Practicas_Mina_CEN del Power BI. Sin embargo se tiene un formato dsitinto, por lo que se necesita ver cómo se espera evaluar estos parámetros en el Liderazgo. Además Confirmar que Centinela efectivamente requiere esto. Además, notar que el formulario de Centinela no contiene el campo RUT.
+
+4. Actualmente se está contando el número de preguntas respondidas y no el número de verificaciones (en parte porque existen formularios que se pueden responder por partes, y porque la consulta DISTINCT es muy cara y demora más con la cantidad de datos). Hay que analizar si no hay problema con esto, o si se prefiere usar operación DISTINCT contabilizando solo la cantidad de veces que se rellena el forms. Como en teoría se usará esto con los datos del 2021, no sería necesario cargar las fechas anteriores y sería mas eficiente esto ultimo.
+
+
 El siguiente explicativo contiene algunas consideraciones a tener para interpretar de manera óptima el dashboard desarrollado.
 
 El Power BI presenta las siguiqntes páginas:
@@ -30,7 +43,7 @@ En las buenas prácticas se encuentra el parámetro Gerencia/SI, el cual tiene l
 
 ## Pendientes o a considerar
 Actualmente, los formularios de buenas prácticas plantas y de las estrategias de control, presentan el campo RUT. Para el caso de RECSS, el campo RUT está pendiente.
-Una vez ingresado el campo RUT, se debe enlazar en el modelo relacional con el campo RUT de la tabla Nombre. Dado que la tabla Nombre se forma a partir de los nombres y RUT de todos los empleados existentes en las bases de datos usadas, se debe actualizar su cálculo con los valores de las tablas de RECSS. La fórmula para esta tabla quedaría de la siguiente manera:
+Una vez ingresado el campo RUT, se debe enlazar en el modelo relacional con el campo RUT de la tabla Nombre. Dado que la tabla Nombre se forma a partir de los nombres y RUT de todos los empleados existentes en las bases de datos usadas, se debe actualizar su cálculo con los valores de las tablas de RECSS. Para el caso de integrar 12P Mineras, es análogo. La fórmula para esta tabla quedaría de la siguiente manera:
 
 ```
 Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre],"Tipo",[Tipo],"Compañía",[Compañía], "RUT",[RUT]),
@@ -48,7 +61,4 @@ Nombre = DISTINCT(UNION(SELECTCOLUMNS(Operador_Mantenedor,"Nombre",[Nombre_Ingre
 "Tipo",[Tipo],"Compañía",[Compañía],"RUT",[RUT]),Corporativo[Nombre]<>"")))
 ```
 
-Para presentar los nombres de los verificadores, existe más de una alternativa. Por un lado, Antucoya presentó sus tablas de pares Nombre - RUT de los empleados internos y externos. En el caso de Centinela, solo de los internos. De esta manera (y como se puede ver en la pestaña Homologación del modelo relacional), se pueden conectar estas tablas intermedias con la tabla Nombre (mediante el RUT) para tener los nombres "limpios" de cada empleado. Notar que estas tablas tendrían que actualizarse de manera manual (por ejemplo, mensualmente), para nuevos empleados. Para el caso de la tabla Nombre, esta se actualiza automáticamente con los datos ingresados en los forms. Por ende, la opción alternativa es no usar estos pares RUT-Nombre, a cambio de perder la posibilidad de mostrar en un único nombre los múltiples ingesos asociados al mismo RUT. (Aunque, de todos modos, el logro viene asociado al RUT, por lo que se tendrían los mismos resultados para los distintos nombres asociados al mismo RUT; solo que para visualizar es más engorroso)
 
-
-PENDIENTE: INTEGRAR PRÁCTICAS MINERAS ANTUVOYA -  CENTINELA (Aún no tenemos acceso a ellas)
